@@ -5,6 +5,7 @@ from instruments.kt26 import KT26
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+smu = KT26('169.254.0.1')
 
 @app.route('/')
 def index():
@@ -14,6 +15,13 @@ def index():
 @socketio.on("read_kt_26")
 def read_kt_26(data):
     print(data)
+    data['a_i'] = smu.read_channel_parameter('a','i')
+    data['a_v'] = smu.read_channel_parameter('a','v')
+    data['a_r'] = smu.read_channel_parameter('a','r')
+
+    data['b_i'] = smu.read_channel_parameter('b','i')
+    data['b_v'] = smu.read_channel_parameter('b','v')
+    data['b_r'] = smu.read_channel_parameter('b','r')
     emit("announce read kt 26", data)
 
 

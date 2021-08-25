@@ -9,6 +9,11 @@ class KT26(Instrument):
         Instrument.__init__(self, address=address, name=name)
 
 
+    def idn_query(self):
+        self.channel.write('*IDN?')
+        return self.channel.read()
+
+
     def reset(self):
         self.channel.write('*RST')
 
@@ -28,10 +33,11 @@ class KT26(Instrument):
         self.channel.write('smub.nvbuffer2.clear()')
 
 
-    def sample(self, parameter, count=10):
-        self.channel.write('smua.measure.count = 10 ')
-        self.channel.write('smua.measure.v(smua.nvbuffer1)')
-        self.channel.write('printbuffer(1, smua.nvbuffer1.n, smua.nvbuffer1)')
+    def sample(self, parameter, output_channel, count=10):
+        self.clear_buffer_all()
+        self.channel.write(f'smu{output_channel}.measure.count = {count} ')
+        self.channel.write(f'smu{output_channel}.measure.{parameter}(smu{output_channel}.nvbuffer1)')
+        self.channel.write(f'printbuffer(1, smu{output_channel}.nvbuffer1.n, smu{output_channel}.nvbuffer1)')
         value = np.float_(self.channel.read().split(','))
         return value
 
