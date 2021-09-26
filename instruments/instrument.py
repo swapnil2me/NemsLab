@@ -6,6 +6,5 @@ class Instrument:
 
     def __init__(self, address, name=''):
         self.address = address
-        self.channel = vxi11.Instrument(address, 'inst0')
+        self.channel = vxi11.Instrument(self.address, 'inst0')
         self.name = name
-

@@ -10,6 +10,28 @@
     <div class="instrument" id="kt26">
       <p>KT 26</p>
     </div>
+    <br>
+    <div class="instrument" id="stop_button">
+      <p>Stop</p>
+    </div>
+    <div class="parameter_form_container">
+      <form class="parameter_form">
+        <input type="radio" id="inst_1" name="inst" value="inst_1">
+        <label for="fo1">Instrument 1</label><br>
+        <input type="radio" id="inst_2" name="inst" value="inst_2" />
+        <label for="fo2">Instrument 2</label><br>
+        <input type="radio" id="exp_1" name="exp" value="exp_1" />
+        <label for="foo1">Experiment 1</label><br>
+        <input type="radio" id="exp_2" name="exp" value="exp_2" />
+        <label for="foo2">Experiment 2</label><br>
+        <input name="name" value="name" />
+        <select name="param">
+            <option value="VgDC" selected="selected">Vg DC</option>
+            <option value="VgAC">Vg AC</option>
+        </select>
+        <input type="submit" value="Submit form">
+      </form>
+    </div>
   </body>
   <script src="static/index.js"></script>
 </html>
