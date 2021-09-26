@@ -90,9 +90,9 @@ def index():
 def read_kt_26(data):
     experiment.reset()
     experiment.com_data(data)
-    t = Thread(target=experiment.run, args=())
-    t.start()
-    t.join()
+    expt_thread = Thread(target=experiment.run, args=())
+    expt_thread.start()
+    expt_thread.join()
     data['instSays'] = 'Sweep thread finished!'
     emit("announce read kt 26", data)
     return
