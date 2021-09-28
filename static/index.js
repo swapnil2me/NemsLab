@@ -1,5 +1,32 @@
 document.addEventListener("DOMContentLoaded", ()=>{
   console.log('p');
+  let sweep_var, fixed_var;
+  let i = document.getElementById('sweep_sd');
+  i.addEventListener("change", () => {
+    console.log(i.checked);
+    if (i.checked) {
+      document.getElementById('sweep_g_params').hidden = true;
+      document.getElementById('g_start').placeholder = 0;
+      document.getElementById('sweep_sd_params').hidden = false;
+      document.getElementById('sd_start').placeholder = 'start';
+      sweep_var = 'vsd';
+      fixed_var = 'vg';
+    }
+  });
+
+  let j = document.getElementById('sweep_g');
+  j.addEventListener("change", () => {
+    console.log(j.checked);
+    if (j.checked) {
+      document.getElementById('sweep_sd_params').hidden = true;
+      document.getElementById('sd_start').placeholder = 0;
+      document.getElementById('sweep_g_params').hidden = false;
+      document.getElementById('g_start').placeholder = 'start';
+      sweep_var = 'vg';
+      fixed_var = 'vsd';
+      // document.querySelector('input[name=sweep_type]:checked').id
+    }
+  });
 
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {cookie: true});
 

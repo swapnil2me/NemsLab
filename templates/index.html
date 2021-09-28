@@ -31,6 +31,42 @@
         </select>
         <input type="submit" value="Submit form">
       </form>
+      <br>
+      <div class="param_card">
+        <h3>Vsd</h3>
+        <input type="radio" id="sweep_sd" name="sweep" value="vsd" />
+        <label for="fo1">Sweep This</label>
+        <br>
+        <input id="sd_start" type="number" name="start" value="start" placeholder="start" step="0.25">
+        <span id="sweep_sd_params">
+          <input type="number" name="step" value="step" placeholder="step" step="0.05">
+          <input type="number" name="end" value="end" placeholder="end" step="0.25">
+          <br>
+          <h4>Sweep Type</h4>
+          <input type="radio" id="sweep_1w" name="sweep_type" value="1w" checked/>
+          <label for="fo1">One way</label>
+          <input type="radio" id="sweep_mirror" name="sweep_type" value="mirror" />
+          <label for="fo1">Mirror</label>
+        </span>
+
+      </div>
+      <div class="param_card">
+        <h3>Vg</h3>
+        <input type="radio" id="sweep_g" name="sweep" value="vg" />
+        <label for="fo1">Sweep This</label>
+        <br>
+        <input id="g_start" type="number" name="start" value="start" placeholder="start" step="0.25">
+        <span id="sweep_g_params">
+          <input type="number" name="step" value="step" placeholder="step" step="0.05">
+          <input type="number" name="end" value="end" placeholder="end" step="0.25">
+          <br>
+          <h4>Sweep Type</h4>
+          <input type="radio" id="sweep_1w" name="sweep_type" value="1w" checked/>
+          <label for="fo1">One way</label>
+          <input type="radio" id="sweep_mirror" name="sweep_type" value="mirror" />
+          <label for="fo1">Mirror</label>
+        </span>
+      </div>
     </div>
   </body>
   <script src="static/index.js"></script>
