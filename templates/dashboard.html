@@ -134,19 +134,19 @@
         </nav>
         <div class="container-fluid">
           <div class="d-sm-flex justify-content-between align-items-center mb-4">
-            <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+            <h3 class="text-dark mb-0">Transport Charecterization</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
           </div>
-          <div class="row d-sm-flex d-lg-flex justify-content-sm-center justify-content-lg-center">
+          <div class="row d-sm-flex d-lg-flex justify-content-sm-center justify-content-lg-center" style="max-width: 500px; margin: auto;">
             <div class="col-md-6 col-xl-3 mb-4" style="min-width: 250px;max-width: 250px;">
               <div class="card shadow border-start-primary py-2">
-                <div class="card-body">
+                <div class="card-body" style="min-height: 150px">
                   <div class="row align-items-center no-gutters">
                     <div class="col me-2">
                       <div class="text text-primary fw-bold text-s mb-1"><span>V<sub>sd</sub> (mV)</span></div>
                       <!-- <div class="text-dark fw-bold h5 mb-0"><span>Param 1</span></div> -->
                     </div>
                     <div class="col-auto">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vsd_sweep_state" name="sweep_var"><label class="form-check-label" for="vsd_sweep_state">Sweep</label></div>
+                      <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="vsd_sweep_state" name="sweep_var"><label class="form-check-label" for="vsd_sweep_state">Sweep</label></div>
                     </div>
                   </div>
                   <div class="row align-items-center no-gutters">
@@ -155,29 +155,21 @@
                         <div class="col">
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0"><input id="vsd_sweep_start" type="number" name="Start" step="0.25" min="0.25" max="10" placeholder="Start" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0"><input class="run_dict_elem" id="vsd_sweep_start" type="number" name="Start" step="0.25" min="0.25" max="10" placeholder="Start" style="width: 150px;"></div>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0 sweep_sd_params"><input id="vsd_sweep_step" type="number" name="step" step="0.25" min="0.25" max="5" placeholder="step" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0 sweep_sd_params"><input class="run_dict_elem" id="vsd_sweep_step" type="number" name="step" step="0.25" min="0.25" max="5" placeholder="step" style="width: 150px;"></div>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0 sweep_sd_params"><input id="vsd_sweep_end" type="number" name="End" step="0.25" min="0.25" max="10" placeholder="End" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0 sweep_sd_params"><input class="run_dict_elem" id="vsd_sweep_end" type="number" name="End" step="0.25" min="0.25" max="10" placeholder="End" style="width: 150px;"></div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row align-items-center no-gutters sweep_sd_params">
-                    <div class="col me-2">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vsd_sweep_oneWay" name="sweep_direction"><label class="form-check-label" for="vsd_sweep_oneWay">One Way</label></div>
-                    </div>
-                    <div class="col-auto">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vsd_sweep_mirror" name="sweep_direction"><label class="form-check-label" for="vsd_sweep_mirror">Mirror</label></div>
                     </div>
                   </div>
                 </div>
@@ -185,14 +177,14 @@
             </div>
             <div class="col-md-6 col-xl-3 mb-4" style="min-width: 250px;max-width: 250px;">
               <div class="card shadow border-start-primary py-2">
-                <div class="card-body">
+                <div class="card-body" style="min-height: 150px">
                   <div class="row align-items-center no-gutters">
                     <div class="col me-2">
                       <div class="text text-primary fw-bold text-s mb-1"><span>V<sub>g</sub> (V)</span></div>
                       <!-- <div class="text-dark fw-bold h5 mb-0"><span>Param 1</span></div> -->
                     </div>
                     <div class="col-auto">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vg_sweep_state" name="sweep_var"><label class="form-check-label" for="vsd_sweep_state">Sweep</label></div>
+                      <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="vg_sweep_state" name="sweep_var"><label class="form-check-label" for="vsd_sweep_state">Sweep</label></div>
                     </div>
                   </div>
                   <div class="row align-items-center no-gutters">
@@ -201,29 +193,21 @@
                         <div class="col">
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0"><input id="vg_sweep_start" type="number" name="Start" step="0.25" min="0.25" max="10" placeholder="Start" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0"><input class="run_dict_elem" id="vg_sweep_start" type="number" name="Start" step="0.25" min="0.25" max="10" placeholder="Start" style="width: 150px;"></div>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0 sweep_g_params"><input id="vg_sweep_step" type="number" name="step" step="0.25" min="0.25" max="5" placeholder="step" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0 sweep_g_params"><input class="run_dict_elem" id="vg_sweep_step" type="number" name="step" step="0.25" min="0.25" max="5" placeholder="step" style="width: 150px;"></div>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col">
-                              <div class="text-dark fw-bold h5 mb-0 sweep_g_params"><input id="vg_sweep_end" type="number" name="End" step="0.25" min="0.25" max="10" placeholder="End" style="width: 150px;"></div>
+                              <div class="text-dark fw-bold h5 mb-0 sweep_g_params"><input class="run_dict_elem" id="vg_sweep_end" type="number" name="End" step="0.25" min="0.25" max="10" placeholder="End" style="width: 150px;"></div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row align-items-center no-gutters sweep_g_params">
-                    <div class="col me-2">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vg_sweep_oneWay" name="sweep_direction"><label class="form-check-label" for="vg_sweep_oneWay">One Way</label></div>
-                    </div>
-                    <div class="col-auto">
-                      <div class="form-check"><input class="form-check-input" type="radio" id="vg_sweep_mirror" name="sweep_direction"><label class="form-check-label" for="vg_sweep_mirror">Mirror</label></div>
                     </div>
                   </div>
                 </div>
@@ -278,17 +262,17 @@
                       <div class="row">
                         <div class="col">
                           <div class="text-dark fw-bold h5 mb-0">
-                            <div class="form-check"><input class="form-check-input" type="radio" id="record_param_I" name="record_param"><label class="form-check-label" for="record_param_I">I</label></div>
+                            <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="record_param_I" name="record_param"><label class="form-check-label" for="record_param_I">I</label></div>
                           </div>
                         </div>
                         <div class="col">
                           <div class="text-dark fw-bold h5 mb-0">
-                            <div class="form-check"><input class="form-check-input" type="radio" id="record_param_V" name="record_param"><label class="form-check-label" for="record_param_V">V</label></div>
+                            <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="record_param_V" name="record_param"><label class="form-check-label" for="record_param_V">V</label></div>
                           </div>
                         </div>
                         <div class="col">
                           <div class="text-dark fw-bold h5 mb-0">
-                            <div class="form-check"><input class="form-check-input" type="radio" id="record_param_R" name="record_param"><label class="form-check-label" for="record_param_R">R</label></div>
+                            <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="record_param_R" name="record_param" checked><label class="form-check-label" for="record_param_R">R</label></div>
                           </div>
                         </div>
                       </div>
@@ -297,6 +281,28 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-6 col-xl-3 mb-4" style="min-width: 250px;max-width: 250px;">
+              <div class="card shadow border-start-primary py-2">
+                <div class="card-body">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col me-2">
+                      <div class="text text-primary fw-bold text-s mb-1"><span>Sweep style</span></div>
+                      <!-- <div class="text-dark fw-bold h5 mb-0"><span>Param 1</span></div> -->
+                    </div>
+                  </div>
+
+                  <div class="row align-items-center no-gutters">
+                    <div class="col me-2">
+                      <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="vsd_sweep_oneWay" name="sweep_direction"><label class="form-check-label" for="vsd_sweep_oneWay">One Way</label></div>
+                    </div>
+                    <div class="col-auto">
+                      <div class="form-check"><input class="form-check-input run_dict_elem" type="radio" id="vsd_sweep_mirror" name="sweep_direction" checked><label class="form-check-label" for="vsd_sweep_mirror">Mirror</label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-md-6 col-xl-3 mb-4" style="min-width: 250px;max-width: 250px;">
               <div class="card shadow border-start-primary py-2">
                 <div class="card-body">
