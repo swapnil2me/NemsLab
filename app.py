@@ -4,8 +4,8 @@ from instruments.kt26 import KT26
 from instruments.dummy_instrument import DummyI
 from threading import Thread
 import time
-import eventlet
-eventlet.monkey_patch()
+# import eventlet
+# eventlet.monkey_patch()
 
 class Param_Sweep_Thread():
     """docstring for Param_Sweep_Thread."""
@@ -57,8 +57,9 @@ class Param_Sweep_Thread():
 
 
 app = Flask(__name__)
-app.app_context().push()
+# app.app_context().push()
 socketio = SocketIO(app, async_mode='threading')
+
 
 # smu = KT26('169.254.0.1')
 dummy = DummyI()
@@ -70,7 +71,7 @@ experiment.set_emitter(socketio)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('dashboard.html')
 
 
 # @socketio.on("read_kt_26")
@@ -95,6 +96,8 @@ def read_kt_26(data):
     expt_thread.join()
     data['instSays'] = 'Sweep thread finished!'
     emit("announce read kt 26", data)
+    emit("enable start button")
+    print('Sweep thread finished!')
     return
 
 
@@ -113,3 +116,4 @@ def stop_sweep(data):
 
 if __name__ == '__main__':
     socketio.run(app, host='127.0.0.1', port=8000, debug=True)
+    # app.run(host='127.0.0.1', port=8000, debug=True)
