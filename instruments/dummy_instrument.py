@@ -13,7 +13,7 @@ class DummyI:
 
     def read_data(self):
         # print('reading data')
-        return random()
+        return random()*100
 
     def set_state(self, name, value):
         self.name = value

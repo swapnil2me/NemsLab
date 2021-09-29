@@ -44,14 +44,14 @@ class Param_Sweep_Thread():
 
     def get_sweep_list(self, sweep_type, start, stop, step):
         if sweep_type == 'oneWay':
-            fw = np.arange(start, stop+step, step)
-            bw = np.arange(stop, start-step, -step)
+            fw = np.arange(start, stop, step)
+            bw = np.arange(stop, start, -step)
             return np.concatenate((fw,bw))
         elif sweep_type == 'mirror':
-            fw = np.arange(start, stop+step, step)
-            bw = np.arange(stop, start-step, -step)
-            bw_minus = np.arange(start, -1*stop-step, -step)
-            fw_minus = np.arange(-1*stop, start+step, step)
+            fw = np.arange(start, stop, step)
+            bw = np.arange(stop, start, -step)
+            bw_minus = np.arange(start, -1*stop, -step)
+            fw_minus = np.arange(-1*stop, start, step)
             return np.concatenate((fw,bw,bw_minus,fw_minus))
         else:
             return np.arange(0,1,1)
@@ -71,6 +71,8 @@ class Param_Sweep_Thread():
         print(sweep_var_list)
         # time.sleep(10)
         for i in sweep_var_list:
+            if not self._running:
+                break
             read_count += 1
             print(i)
             instrument_sweeper.set_state(data_dict['sweep_var'],i)
@@ -147,6 +149,6 @@ def stop_sweep(data):
 
 
 if __name__ == '__main__':
-    # socketio.run(app, host='127.0.0.1', port=8000, debug=True)
-    socketio.run(app, host='10.56.240.174', port=8000, debug=True)
+    socketio.run(app, host='127.0.0.1', port=8000, debug=True)
+    # socketio.run(app, host='10.56.240.174', port=8000, debug=True)
     # app.run(host='127.0.0.1', port=8000, debug=True)

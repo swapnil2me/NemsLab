@@ -93,11 +93,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     type: "scatter",
     data: {
       datasets: [{
-        backgroundColor: "rgba(242,26,26,0.87)",
+        backgroundColor: "#4e73df",
         borderColor: "#4e73df",
         label: "raw",
         pointRadius: 4,
-        pointBackgroundColor: "rgba(0,0,255,1)",
+        pointBackgroundColor: "#4e73df",
         data: xyValues
       }]
     },
@@ -129,6 +129,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   function clearChart(chart, label) {
     chart.data.datasets[0].data = [];
+    // chart.data.datasets[0].backgroundColor= "#858796",
+    // chart.data.datasets[0].borderColor= "#858796",
+    // chart.data.datasets[0].label= "old",
+    // chart.data.datasets[0].pointBackgroundColor= "#858796",
     chart.update();
   }
 
@@ -151,8 +155,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 display: true,
                 labelString: param_dict.sweep_var + ' (' + unit_dict[param_dict.sweep_var] + ')'
               },
-              ticks: {min: (param_dict.sweep_type == "mirror") ? -1*Number(param_dict.sweep_end) : Number(param_dict.sweep_start),
-                      max: Number(param_dict.sweep_end)}
+              ticks: {min: (param_dict.sweep_type == "mirror") ? -1*(Number(param_dict.sweep_end)+Number(param_dict.sweep_step)) : Number(param_dict.sweep_start),
+                      max: Number(param_dict.sweep_end)+Number(param_dict.sweep_step)}
             }],
             yAxes: [{
               scaleLabel: {
@@ -200,7 +204,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   })//SocketIO Connect
 
   socket.on("dara_read", (data) => {
-    addData(sweepPlot, 'swap', {x:data.x, y:data.y})
+    addData(sweepPlot, 'raw', {x:data.x, y:data.y})
     console.log(data);
   });
 
