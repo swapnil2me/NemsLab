@@ -4,8 +4,11 @@ from instruments.kt26 import KT26
 from instruments.dummy_instrument import DummyI
 from threading import Thread
 import time
+import numpy as np
 # import eventlet
 # eventlet.monkey_patch()
+
+read_count = 0
 
 class Param_Sweep_Thread():
     """docstring for Param_Sweep_Thread."""
@@ -39,19 +42,47 @@ class Param_Sweep_Thread():
     def reset(self):
         self._running = True
 
+    def get_sweep_list(self, sweep_type, start, stop, step):
+        if sweep_type == 'oneWay':
+            fw = np.arange(start, stop+step, step)
+            bw = np.arange(stop, start-step, -step)
+            return np.concatenate((fw,bw))
+        elif sweep_type == 'mirror':
+            fw = np.arange(start, stop+step, step)
+            bw = np.arange(stop, start-step, -step)
+            bw_minus = np.arange(start, -1*stop-step, -step)
+            fw_minus = np.arange(-1*stop, start+step, step)
+            return np.concatenate((fw,bw,bw_minus,fw_minus))
+        else:
+            return np.arange(0,1,1)
+
     def run(self):
-        n = 10
+        global read_count
         instrument_sweeper = self.instrument_sweeper
         data_dict = self.data_dict
         self._currently_running = True
-        while self._running and n>0:
-            data_dict['param'] = instrument_sweeper.read_data()
-            self.emitter.emit("announce read kt 26", data_dict)
-            n -= 1
+
+        # set fixed_var
+        instrument_sweeper.set_state(data_dict['fixed_var'],data_dict['fixed_var_val'])
+
+        # get sweep var List
+        sweep_var_list = self.get_sweep_list(data_dict['sweep_type'],float(data_dict['sweep_start']),float(data_dict['sweep_end']),float(data_dict['sweep_step']))
+
+        print(sweep_var_list)
+        # time.sleep(10)
+        for i in sweep_var_list:
+            read_count += 1
+            print(i)
+            instrument_sweeper.set_state(data_dict['sweep_var'],i)
+            data_dict['x'] = i
+            data_dict['y'] = instrument_sweeper.read_data()
+            data_dict['n'] = read_count
+            self.emitter.emit("dara_read", data_dict)
             time.sleep(0.5)
+
         if not self._running:
             data_dict['message'] = 'Experiment stopped'
-            self.emitter.emit("announce read kt 26", data_dict)
+            self.emitter.emit("dara_read", data_dict)
         self._currently_running = False
         return
 
@@ -87,7 +118,7 @@ def index():
 #     emit("announce read kt 26", data)
 
 
-@socketio.on("read_kt_26")
+@socketio.on("sweep_start")
 def read_kt_26(data):
     experiment.reset()
     experiment.com_data(data)
@@ -95,25 +126,27 @@ def read_kt_26(data):
     expt_thread.start()
     expt_thread.join()
     data['instSays'] = 'Sweep thread finished!'
-    emit("announce read kt 26", data)
-    emit("enable start button")
+    emit("data_read", data)
+    emit("sweep_end")
     print('Sweep thread finished!')
     return
 
 
-@socketio.on("stop sweep")
+@socketio.on("stop_sweep")
 def stop_sweep(data):
-    print(data)
+    # print(data)
     r = experiment.stop_run()
     if r:
-        print('Sweep Stopped')
+        # print('Sweep Stopped')
         data['instSays'] = 'Ok ok!'
     else:
         data['instSays'] = 'Nothig is running buddy.'
-    emit("announce read kt 26", data)
+    emit("dara_read", data)
+
     return
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='127.0.0.1', port=8000, debug=True)
+    # socketio.run(app, host='127.0.0.1', port=8000, debug=True)
+    socketio.run(app, host='10.56.240.174', port=8000, debug=True)
     # app.run(host='127.0.0.1', port=8000, debug=True)

@@ -12,5 +12,8 @@ class DummyI:
 
 
     def read_data(self):
-        print('reading data')
+        # print('reading data')
         return random()
+
+    def set_state(self, name, value):
+        self.name = value
