@@ -351,7 +351,7 @@
             <div class="col-lg-5 col-xl-4">
               <div class="card shadow mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h6 class="text-primary fw-bold m-0">Revenue Sources</h6>
+                  <h6 class="text-primary fw-bold m-0">Plot History</h6>
                   <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                       <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -361,24 +361,70 @@
                 </div>
                 <div class="card-body">
                   <div class="chart-area">
-                    <canvas id="sweep_plot2"
-                      data-bss-chart="{&quot;type&quot;:&quot;scatter&quot;,&quot;data&quot;:{&quot;datasets&quot;:[{&quot;label&quot;:&quot;raw&quot;,&quot;backgroundColor&quot;:&quot;rgba(242,26,26,0.87)&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[{&quot;x&quot;:&quot;-10&quot;,&quot;y&quot;:&quot;50&quot;},{&quot;x&quot;:&quot;-5&quot;,&quot;y&quot;:&quot;30&quot;},{&quot;x&quot;:&quot;0&quot;,&quot;y&quot;:&quot;15&quot;}]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:true,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
+                    <h5 id="history_plot_leg">Select datafile to plot</h5>
+                    <canvas id="sweep_history_plot">
                     </canvas>
                   </div>
-                  <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="me-2"><i
-                        class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
+                  <!-- <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="me-2"><i
+                        class="fas fa-circle text-info"></i>&nbsp;Refferal</span>
+                  </div> -->
                 </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6 mb-4">
+              <div class="card shadow mb-4" id="history_card">
+                <div class="card-header py-3">
+                  <h6 class="text-primary fw-bold m-0">Experiment History <button class="btn float-end" id="update_history"><i class="fa fa-refresh"></i></button></h6>
+                </div>
+                <ul class="list-group list-group-flush" id="datafile_list">
+                  <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                      <div class="col me-2">
+                        <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check"><button class="btn"><i class="fa fa-download"></i></button></div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"></label></div>
+                      </div> -->
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row align-items-center no-gutters">
+                      <div class="col me-2">
+                        <h6 class="mb-0"><strong>Lunch meeting 2</strong></h6><span class="text-xs">10:30 AM</span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check"><button class="btn"><i class="fa fa-download"></i></button></div>
+                      </div>
+                      <!-- <div class="col-auto">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"></label></div>
+                      </div> -->
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="text-primary fw-bold m-0">Projects</h6>
+                  <h6 class="text-primary fw-bold m-0">Device Details</h6>
                 </div>
                 <div class="card-body">
-                  <h4 class="small fw-bold">Server migration<span class="float-end">20%</span></h4>
+                  <a href="https://indianinstituteofscience-my.sharepoint.com/:f:/g/personal/swapnilmore_iisc_ac_in/EtGABF8fsNlFs29VZdrxlXgBJXWvsW0MAhia-rz49-kyMw?e=0SV7VQ">
+                    <h4 class="small fw-bold">SEM Images</h4>
+                  </a>
+                  <a href="https://indianinstituteofscience-my.sharepoint.com/:f:/g/personal/swapnilmore_iisc_ac_in/Ejd4UOtCow5FrvkuD1w5HtsBI_skqj8QfN2cGEcVsAfN6A?e=UvwbeU">
+                    <h4 class="small fw-bold">Fabrication Repository</h4>
+                  </a>
+                  <a href="https://indianinstituteofscience-my.sharepoint.com/:i:/g/personal/swapnilmore_iisc_ac_in/EbkD5OqNyQZFnoJALxU87TgB7IOsuCp4vXRY4_dqUGNYjA?e=hVR29p">
+                    <h4 class="small fw-bold">I-V characteristics</h4>
+                  </a>
+                  <a href="https://indianinstituteofscience-my.sharepoint.com/:f:/g/personal/swapnilmore_iisc_ac_in/EtGABF8fsNlFs29VZdrxlXgBJXWvsW0MAhia-rz49-kyMw?e=0SV7VQ">
+                    <h4 class="small fw-bold">Transport characteristics</h4>
+                  </a>
+                  <!-- <h4 class="small fw-bold">SEM Images<span class="float-end">20%</span></h4>
                   <div class="progress mb-4">
                     <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="visually-hidden">20%</span></div>
                   </div>
@@ -397,45 +443,8 @@
                   <h4 class="small fw-bold">Account setup<span class="float-end">Complete!</span></h4>
                   <div class="progress mb-4">
                     <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
-                  </div>
+                  </div> -->
                 </div>
-              </div>
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="text-primary fw-bold m-0">Todo List</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div class="row align-items-center no-gutters">
-                      <div class="col me-2">
-                        <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"></label></div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="row align-items-center no-gutters">
-                      <div class="col me-2">
-                        <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">11:30 AM</span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2"></label></div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="row align-items-center no-gutters">
-                      <div class="col me-2">
-                        <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">12:30 AM</span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3"></label></div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
               </div>
             </div>
             <div class="col">

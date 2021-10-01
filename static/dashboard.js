@@ -85,9 +85,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     return true
   }
 
-  let xyValues = [
-
-  ];
+  let xyValues = [];
 
   let sweepPlot = new Chart("sweep_plot", {
     type: "scatter",
@@ -172,12 +170,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
   let socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {cookie: true});
   let startButton = document.getElementById('run_start');
   let stopButton = document.getElementById('run_stop');
+  let updateHistory = document.getElementById('update_history')
+  let historyCard = document.getElementById('history_card')
 
   socket.on("connect", ()=>{
-
     console.log("socket connected");
+    socket.emit("list_history", {'message':'list_history!'});
     startButton.addEventListener("click", (event) => {
-
       if (run_health) {
         if (sweep_makes_cense(run_dict)) {
           startButton.disabled = true;
@@ -193,14 +192,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
       } else {
         alert('Please complete following: ' + check_run_health(run_dict).join(' '))
       }
-
-
     });
 
     stopButton.addEventListener("click", (event) => {
       socket.emit("stop_sweep", {'message':'stop this!'});
     });
 
+    updateHistory.addEventListener("click", (event) => {
+      socket.emit("list_history", {'message':'list_history!'});
+    })
+
+    historyCard.addEventListener("click", (e) => {
+      console.log(e.target.id);
+      socket.emit("get_file_data", {'fname':e.target.id})
+    })
   })//SocketIO Connect
 
   socket.on("dara_read", (data) => {
@@ -208,12 +213,87 @@ document.addEventListener("DOMContentLoaded", ()=>{
     console.log(data);
   });
 
-  socket.on("sweep_end", () => {
+  socket.on("sweep_end", (data) => {
     startButton.disabled = false;
     startButton.innerHTML = 'Start';
     startButton.style.backgroundColor = '#1cc88a';
     startButton.style.borderColor = '#1cc88a';
     document.getElementById('card_read').style.pointerEvents = 'auto';
     console.log("sweep end announce");
+    console.log(data);
   });
+
+  socket.on("send_history", (data) => {
+
+    let listNode = document.getElementById('datafile_list');
+    listNode.innerHTML = '';
+
+    data.datafiles.forEach((item, i) => {
+      let li = document.createElement("li")
+      li.classList.add("list-group-item")
+      li.innerHTML =`
+        <div class="row align-items-center no-gutters">
+          <div class="col me-2">
+            <h6 class="mb-0"><strong id="${item}">${item}</strong></h6><span class="text-xs">
+            ${item.split('_').filter((e)=>{return e.startsWith('h')})[0].split('h')[1]}
+            :
+            ${item.split('_').filter((e)=>{return e.startsWith('m')})[0].split('m')[1]}
+            </span>
+          </div>
+          <div class="col-auto">
+            <div class="form-check"><button class="btn"><i class="fa fa-download"></i></button></div>
+          </div>
+        </div>
+        `;
+      listNode.appendChild(li);
+    });
+
+  });
+
+  socket.on("send_file_data", (data) => {
+    document.getElementById('history_plot_leg').innerHTML='';
+    let plotData = JSON.parse(data.data);
+    let xlabel, ylabel
+    [xlabel, ylabel] = data.columns
+
+    let histPlot = new Chart("sweep_history_plot", {
+      type: "scatter",
+      data: {
+        datasets: [{
+          backgroundColor: "#4e73df",
+          borderColor: "#4e73df",
+          // label: "raw",
+          pointRadius: 4,
+          pointBackgroundColor: "#4e73df",
+          data: plotData
+        }]
+      },
+      options:{
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+          display: false,
+          labels: { fontStyle: "normal" }
+        },
+         scales: {
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: xlabel
+            },
+            // ticks:{min:-1,max:1}
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: ylabel
+            },
+            // ticks:{min:-1,max:1}
+          }]
+        }
+    }
+    });
+
+  });
+
 })//document loaded

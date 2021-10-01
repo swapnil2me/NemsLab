@@ -5,6 +5,9 @@ from instruments.dummy_instrument import DummyI
 from threading import Thread
 import time
 import numpy as np
+from datetime import datetime as dt
+from os import walk
+import pandas as pd
 # import eventlet
 # eventlet.monkey_patch()
 
@@ -56,6 +59,10 @@ class Param_Sweep_Thread():
         else:
             return np.arange(0,1,1)
 
+    def get_file_name(self):
+        data_dict = self.data_dict
+        return './datafiles/'+data_dict['read_param'] + '_vs_' + data_dict['sweep_var'] + dt.now().strftime('_%Y_%m_%d_h%H_m%M_s%S') + '.csv'
+
     def run(self):
         global read_count
         instrument_sweeper = self.instrument_sweeper
@@ -67,7 +74,9 @@ class Param_Sweep_Thread():
 
         # get sweep var List
         sweep_var_list = self.get_sweep_list(data_dict['sweep_type'],float(data_dict['sweep_start']),float(data_dict['sweep_end']),float(data_dict['sweep_step']))
-
+        fname = self.get_file_name()
+        file = open(fname,'w')
+        file.write(data_dict['sweep_var']+','+data_dict['read_param']+'\n')
         print(sweep_var_list)
         # time.sleep(10)
         for i in sweep_var_list:
@@ -79,6 +88,7 @@ class Param_Sweep_Thread():
             data_dict['x'] = i
             data_dict['y'] = instrument_sweeper.read_data()
             data_dict['n'] = read_count
+            file.write(f'{data_dict["x"]:.8f},{data_dict["y"]:.8f}\n')
             self.emitter.emit("dara_read", data_dict)
             time.sleep(0.5)
 
@@ -86,6 +96,7 @@ class Param_Sweep_Thread():
             data_dict['message'] = 'Experiment stopped'
             self.emitter.emit("dara_read", data_dict)
         self._currently_running = False
+        file.close()
         return
 
 
@@ -101,6 +112,12 @@ experiment = Param_Sweep_Thread()
 experiment.user_this_sweeper(dummy)
 experiment.set_emitter(socketio)
 
+def list_datafiles():
+    f = []
+    for (dirpath, dirnames, filenames) in walk('./datafiles/'):
+        f.extend(filenames)
+        break
+    return f
 
 @app.route('/')
 def index():
@@ -119,7 +136,6 @@ def index():
 #     data['b_r'] = smu.read_channel_parameter('b','r')
 #     emit("announce read kt 26", data)
 
-
 @socketio.on("sweep_start")
 def read_kt_26(data):
     experiment.reset()
@@ -129,10 +145,17 @@ def read_kt_26(data):
     expt_thread.join()
     data['instSays'] = 'Sweep thread finished!'
     emit("data_read", data)
-    emit("sweep_end")
+    f = list_datafiles()
+    emit("sweep_end",{'datafiles':f})
+    emit("send_history",{'datafiles':f})
     print('Sweep thread finished!')
     return
 
+@socketio.on("list_history")
+def list_history(data):
+    f = list_datafiles()
+    emit("send_history",{'datafiles':f})
+    return
 
 @socketio.on("stop_sweep")
 def stop_sweep(data):
@@ -145,6 +168,15 @@ def stop_sweep(data):
         data['instSays'] = 'Nothig is running buddy.'
     emit("dara_read", data)
 
+    return
+
+
+@socketio.on("get_file_data")
+def get_file_data(data):
+    df = pd.read_csv(f'./datafiles/{data["fname"]}')
+    colnames = list(df.columns)
+    df.columns = ['x','y']
+    emit("send_file_data",{'columns':colnames,'data':df.to_json(orient="records")})
     return
 
 
