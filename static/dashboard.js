@@ -234,14 +234,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
       li.innerHTML =`
         <div class="row align-items-center no-gutters">
           <div class="col me-2">
-            <h6 class="mb-0"><strong id="${item}">${item}</strong></h6><span class="text-xs">
+            <h6 class="mb-0"><strong id="${item}" style="cursor:pointer; font-size: 12px;">${item}</strong></h6><span class="text-xs">
             ${item.split('_').filter((e)=>{return e.startsWith('h')})[0].split('h')[1]}
             :
             ${item.split('_').filter((e)=>{return e.startsWith('m')})[0].split('m')[1]}
             </span>
           </div>
           <div class="col-auto">
-            <div class="form-check"><button class="btn"><i class="fa fa-download"></i></button></div>
+            <button class="btn"><i class="fa fa-download"></i></button>
           </div>
         </div>
         `;
