@@ -11,8 +11,8 @@ select :hover {
     box-shadow: 0 0 10px 100px #fafafa inset;
 }
 
-#marker-color,#marker-shape,#marker-size {
-  background-color: bisque;
+#marker-color-ip,#sw-marker-color-ip {
+  background-color: #4e73df;
   border-radius: 5px;
-  border: 1px solid #b88e5d;
+  border: 0px;
 }

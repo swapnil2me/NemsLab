@@ -182,5 +182,6 @@ def get_file_data(data):
 
 if __name__ == '__main__':
     socketio.run(app, host='127.0.0.1', port=8000, debug=True)
-    # socketio.run(app, host='10.56.240.174', port=8000, debug=True)
+    # socketio.run(app, host='10.56.240.67', port=8000, debug=True)#SP
+    # socketio.run(app, host='10.56.240.174', port=8000, debug=True)#SQ
     # app.run(host='127.0.0.1', port=8000, debug=True)

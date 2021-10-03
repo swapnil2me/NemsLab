@@ -83,7 +83,7 @@
                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">4</span><i class="fas fa-envelope fa-fw"></i></a>
                   <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
                     <h6 class="dropdown-header">Messages</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/cense.jpg">
+                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="static/assets/img/avatars/cense.jpg">
                         <div class="bg-success status-indicator"></div>
                       </div>
                       <div class="fw-bold">
@@ -91,7 +91,7 @@
                         <p class="small text-gray-500 mb-0">Lab 1 - 58m</p>
                       </div>
                     </a><a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/cense.jpg">
+                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="static/assets/img/avatars/cense.jpg">
                         <div class="status-indicator"></div>
                       </div>
                       <div class="fw-bold">
@@ -99,7 +99,7 @@
                         <p class="small text-gray-500 mb-0">Lab 1 - 1d</p>
                       </div>
                     </a><a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/cense.jpg">
+                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="static/assets/img/avatars/cense.jpg">
                         <div class="bg-warning status-indicator"></div>
                       </div>
                       <div class="fw-bold">
@@ -107,7 +107,7 @@
                         <p class="small text-gray-500 mb-0">Lab 2 - 2d</p>
                       </div>
                     </a><a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/cense.jpg">
+                      <div class="dropdown-list-image me-3"><img class="rounded-circle" src="static/assets/img/avatars/cense.jpg">
                         <div class="bg-success status-indicator"></div>
                       </div>
                       <div class="fw-bold">
@@ -332,7 +332,7 @@
             <div class="col-lg-7 col-xl-8">
               <div class="card shadow mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h6 class="text-primary fw-bold m-0">Sweep</h6>
+                  <h6 class="text-primary fw-bold m-0">Sweep Plot</h6>
                   <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                       <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -344,6 +344,35 @@
                   <div class="chart-area">
                     <canvas id="sweep_plot">
                     </canvas>
+                  </div>
+                  <div class="text-center small mt-4">
+                    <span class="me-2">
+                      <input list="marker-color" name="color" id="sw-marker-color-ip" placeholder="color hex" style="width:75px; text-align:center;">
+                      <datalist name="color" id="sw-marker-color" onfocus='this.size=-10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
+                        <option class="opt-hover" value="color" disabled selected hidden>Color</option>
+                        <option class="opt-hover" value="e74a3b">e74a3b</option>
+                        <option class="opt-hover" value="4e73df">4e73df</option>
+                        <option class="opt-hover" value="f6c23e">f6c23e</option>
+                      </datalist>
+                    </span>
+                    <span class="me-2">
+                      <select name="shape" id="sw-marker-shape">
+                        <option value="shape" disabled selected hidden>Shape</option>
+                        <option value="circle">circle</option>
+                        <option value="rectRounded">rectRounded</option>
+                        <option value="rect">rect</option>
+                        <option value="rectRot">rectRot</option>
+                        <option value="triangle">triangle</option>
+                        <option value="dash">dash</option>
+                        <option value="star">star</option>
+                        <option value="cross">cross</option>
+                        <option value="crossRot">crossRot</option>
+                        <option value="line">line</option>
+                      </select>
+                    </span>
+                    <span class="me-2">
+                      <input type="number" name="" value="4" min="1" id="sw-marker-size" style="width:50px" placeholder="Size">
+                    </span>
                   </div>
                 </div>
               </div>
@@ -367,23 +396,31 @@
                   </div>
                   <div class="text-center small mt-4">
                     <span class="me-2">
-                      <select name="color" id="marker-color" onfocus='this.size=-10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
-                        <option class="opt-hover" value="volvo" disabled selected hidden>Color</option>
-                        <option class="opt-hover" value="e74a3b" style="background-color:#e74a3b">e74a3b</option>
-                        <option class="opt-hover" value="4e73df" style="background-color:#4e73df">4e73df</option>
-                        <option class="opt-hover" value="f6c23e" style="background-color:#f6c23e">f6c23e</option>
+                      <input list="marker-color" name="color" id="marker-color-ip" placeholder="color hex" style="width:75px; text-align:center;">
+                      <datalist name="color" id="marker-color" onfocus='this.size=-10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
+                        <option class="opt-hover" value="color" disabled selected hidden>Color</option>
+                        <option class="opt-hover" value="e74a3b">e74a3b</option>
+                        <option class="opt-hover" value="4e73df">4e73df</option>
+                        <option class="opt-hover" value="f6c23e">f6c23e</option>
+                      </datalist>
+                    </span>
+                    <span class="me-2">
+                      <select name="shape" id="marker-shape">
+                        <option value="shape" disabled selected hidden>Shape</option>
+                        <option value="circle">circle</option>
+                        <option value="rectRounded">rectRounded</option>
+                        <option value="rect">rect</option>
+                        <option value="rectRot">rectRot</option>
+                        <option value="triangle">triangle</option>
+                        <option value="dash">dash</option>
+                        <option value="star">star</option>
+                        <option value="cross">cross</option>
+                        <option value="crossRot">crossRot</option>
+                        <option value="line">line</option>
                       </select>
                     </span>
                     <span class="me-2">
-                      <select name="color" id="marker-shape">
-                        <option value="volvo" disabled selected hidden>Shape</option>
-                        <option value="circle" style="background-color:#e74a3b">circle</option>
-                        <option value="cross" style="background-color:#4e73df">cross</option>
-                        <option value="crossRot" style="background-color:#f6c23e">crossRot</option>
-                      </select>
-                    </span>
-                    <span class="me-2">
-                      <input type="number" name="" value="" min="1" id="marker-size" style="width:50px" placeholder="Size">
+                      <input type="number" name="" value="4" min="1" id="marker-size" style="width:50px" placeholder="Size">
                     </span>
                   </div>
                 </div>
@@ -392,7 +429,7 @@
           </div>
           <div class="row">
             <div class="col-lg-6 mb-4">
-            <div class="card shadow mb-4" id="history_card">
+              <div class="card shadow mb-4" id="history_card">
                 <div class="card-header py-3">
                   <h6 class="text-primary fw-bold m-0">Experiment History <button class="btn float-end" id="update_history"><i class="fa fa-refresh"></i></button></h6>
                 </div>

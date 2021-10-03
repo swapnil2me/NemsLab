@@ -125,6 +125,42 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
   });
 
+  let histPlot;
+
+  function changeDatasetColor(chart, e) {
+    let colorHex = (e.target.value.startsWith('#')) ? e.target.value : '#' + e.target.value;
+    chart.data.datasets[0].backgroundColor = colorHex;
+    chart.data.datasets[0].borderColor = colorHex;
+    chart.data.datasets[0].pointBackgroundColor = colorHex;
+    e.target.style.backgroundColor = colorHex;
+    e.target.style.color = '#FAFAFA';
+    chart.update();
+  }
+
+  function changeMarker(chart,e) {
+    let shape = e.target.value;
+    chart.data.datasets[0].pointStyle= shape;
+    chart.update();
+  }
+
+  function changeMarkerSize(chart,e) {
+    let size = e.target.value;
+    chart.data.datasets[0].pointRadius= size;
+    chart.update();
+  }
+
+  function attachEvent(elemId,eType,funHandle,chart) {
+    document.getElementById(elemId).addEventListener(eType, (e) => {
+      if (chart) {
+        funHandle(chart, e)
+      }
+    })
+  }
+
+  attachEvent('sw-marker-color-ip','change',changeDatasetColor,sweepPlot);
+  attachEvent('sw-marker-shape','change',changeMarker,sweepPlot);
+  attachEvent('sw-marker-size','change',changeMarkerSize,sweepPlot);
+
   function clearChart(chart, label) {
     chart.data.datasets[0].data = [];
     // chart.data.datasets[0].backgroundColor= "#858796",
@@ -153,8 +189,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 display: true,
                 labelString: param_dict.sweep_var + ' (' + unit_dict[param_dict.sweep_var] + ')'
               },
-              ticks: {min: (param_dict.sweep_type == "mirror") ? -1*(Number(param_dict.sweep_end)+Number(param_dict.sweep_step)) : Number(param_dict.sweep_start),
-                      max: Number(param_dict.sweep_end)+Number(param_dict.sweep_step)}
+              ticks: {min: (param_dict.sweep_type == "mirror") ? -1*(Number(param_dict.sweep_end)) : Number(param_dict.sweep_start),
+                      max: Number(param_dict.sweep_end)}
             }],
             yAxes: [{
               scaleLabel: {
@@ -203,8 +239,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     })
 
     historyCard.addEventListener("click", (e) => {
-      console.log(e.target.id);
-      socket.emit("get_file_data", {'fname':e.target.id})
+      let cl = e.target.classList;
+      let eId = [...cl].filter((i)=>{return i.endsWith('.csv')})[0];
+      // cl.filter((i)=>{return i.endsWith('.csv')});
+      socket.emit("get_file_data", {'fname':eId})
     })
   })//SocketIO Connect
 
@@ -233,8 +271,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
       li.classList.add("list-group-item")
       li.innerHTML =`
         <div class="row align-items-center no-gutters">
-          <div class="col me-2">
-            <h6 class="mb-0"><strong id="${item}" style="cursor:pointer; font-size: 12px;">${item}</strong></h6><span class="text-xs">
+          <div class="col me-2 ${item}"  id="${item}" style="cursor:pointer;">
+            <h6 class="mb-0 ${item}"><strong class="${item}" style="font-size: 12px;">${item}</strong></h6><span class="text-xs ${item}">
             ${item.split('_').filter((e)=>{return e.startsWith('h')})[0].split('h')[1]}
             :
             ${item.split('_').filter((e)=>{return e.startsWith('m')})[0].split('m')[1]}
@@ -255,16 +293,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let plotData = JSON.parse(data.data);
     let xlabel, ylabel
     [xlabel, ylabel] = data.columns
+    let currentColor = document.getElementById('marker-color-ip').value;
+    let color = (currentColor=='') ? "#4e73df":
+                (currentColor.startsWith('#')) ?
+                currentColor :
+                '#'+currentColor;
+    let shape = (document.getElementById('marker-shape').value=='shape') ? "circle":
+            document.getElementById('marker-shape').value;
+    let size = (document.getElementById('marker-size').value=="") ? 4:
+            document.getElementById('marker-size').value;
 
-    let histPlot = new Chart("sweep_history_plot", {
+    if (histPlot) {
+      histPlot.destroy();
+    }
+
+    histPlot = new Chart("sweep_history_plot", {
       type: "scatter",
       data: {
         datasets: [{
-          backgroundColor: "#4e73df",
-          borderColor: "#4e73df",
+          backgroundColor: color,
+          borderColor: color,
           // label: "raw",
-          pointRadius: 4,
-          pointBackgroundColor: "#4e73df",
+          pointStyle: shape,
+          pointRadius: size,
+          pointBackgroundColor: color,
           data: plotData
         }]
       },
@@ -294,6 +346,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
     });
 
+    attachEvent('marker-color-ip','change',changeDatasetColor,histPlot);
+    attachEvent('marker-shape','change',changeMarker,histPlot);
+    attachEvent('marker-size','change',changeMarkerSize,histPlot);
   });
 
 })//document loaded
