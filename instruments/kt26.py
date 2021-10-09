@@ -7,6 +7,7 @@ class KT26(Instrument):
     def __init__(self, address, name='KT26'):
 
         Instrument.__init__(self, address=address, name=name)
+        self.unit = 'V'
 
 
     def idn_query(self):

@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                   'fixed_var_val':'',
                   'read_param':''
                 };
-  let unit_dict = {I:'A','vsd':'mV','vg':'V','V':'V',R:'ohm'}
+  let unit_dict = {I:'nA','vsd':'mV','vg':'V','V':'V',R:'ohm'}
   let i = document.getElementById('vsd_sweep_state');
   i.addEventListener("change", () => {
     if (i.checked) {

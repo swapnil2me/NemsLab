@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from instruments.kt26 import KT26
 from instruments.dummy_instrument import DummyI
+from instruments.kt26RVG import KT26RVG
 from threading import Thread
 import time
 import numpy as np
@@ -70,7 +71,7 @@ class Param_Sweep_Thread():
         self._currently_running = True
 
         # set fixed_var
-        instrument_sweeper.set_state(data_dict['fixed_var'],data_dict['fixed_var_val'])
+        instrument_sweeper.set_state(data_dict['fixed_var'],float(data_dict['fixed_var_val']))
 
         # get sweep var List
         sweep_var_list = self.get_sweep_list(data_dict['sweep_type'],float(data_dict['sweep_start']),float(data_dict['sweep_end']),float(data_dict['sweep_step']))
@@ -86,7 +87,7 @@ class Param_Sweep_Thread():
             print(i)
             instrument_sweeper.set_state(data_dict['sweep_var'],i)
             data_dict['x'] = i
-            data_dict['y'] = instrument_sweeper.read_data()
+            data_dict['y'] = instrument_sweeper.read_data('vsd', data_dict['read_param'])
             data_dict['n'] = read_count
             file.write(f'{data_dict["x"]:.8f},{data_dict["y"]:.8f}\n')
             self.emitter.emit("dara_read", data_dict)
@@ -96,6 +97,7 @@ class Param_Sweep_Thread():
             data_dict['message'] = 'Experiment stopped'
             self.emitter.emit("dara_read", data_dict)
         self._currently_running = False
+        instrument_sweeper.ramp_down()
         file.close()
         return
 
@@ -105,11 +107,11 @@ app = Flask(__name__)
 socketio = SocketIO(app, async_mode='threading')
 
 
-# smu = KT26('169.254.0.1')
+smu = KT26RVG('169.254.0.1')
 dummy = DummyI()
 
 experiment = Param_Sweep_Thread()
-experiment.user_this_sweeper(dummy)
+experiment.user_this_sweeper(smu)
 experiment.set_emitter(socketio)
 
 def list_datafiles():
