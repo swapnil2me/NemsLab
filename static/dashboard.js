@@ -294,13 +294,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let xlabel, ylabel
     [xlabel, ylabel] = data.columns
     let currentColor = document.getElementById('marker-color-ip').value;
-    let color = (currentColor=='') ? "#4e73df":
+    let color = (currentColor==='') ? "#4e73df":
                 (currentColor.startsWith('#')) ?
                 currentColor :
                 '#'+currentColor;
-    let shape = (document.getElementById('marker-shape').value=='shape') ? "circle":
+    let shape = (document.getElementById('marker-shape').value==='shape') ? "circle":
             document.getElementById('marker-shape').value;
-    let size = (document.getElementById('marker-size').value=="") ? 4:
+    let size = (document.getElementById('marker-size').value==="") ? 4:
             document.getElementById('marker-size').value;
 
     if (histPlot) {
